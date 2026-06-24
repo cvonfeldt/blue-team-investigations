@@ -11,7 +11,7 @@
 
 ![Inv](screenshots/Sys0.png)
 
-#### 1. What is the file that gave access to the attacker? (2 points)
+### 1. What is the file that gave access to the attacker? (2 points)
 
 So for this one I'm going to first look for command line execution (Event ID 1) and look for a suspicious parent process or spawning file since I know that's a super common initial access vector. 
 
@@ -38,7 +38,7 @@ We can see right above it that a file downloaded from chrome called "updater.hta
 ---
 
 
-#### 2. What is the powershell cmdlet used to download the malware file and what is the port? (2 points)
+### 2. What is the powershell cmdlet used to download the malware file and what is the port? (2 points)
 
 Given that a cmdlet was used, we know this will also have Event ID 1 so we can just keep scrolling down. Looks like we see it here:
 
@@ -50,7 +50,7 @@ We see the cmdlet is: "INvoke-WebRequest" - which allows interaction with a web 
 
 ---
 
-#### 3. What is the name of the environment variable set by the attacker? (2 points)
+### 3. What is the name of the environment variable set by the attacker? (2 points)
 
 So for this we know that a registry change (env variable set) would have Event ID 13, but we might be able to find it with Event ID 1 if the variable was set by the malware as an argument of a cmd.exe creation. 
 
@@ -64,7 +64,7 @@ Where we see that the environment variable set is comspec=C:\windows\temp\supply
 
 ---
 
-#### 4. What is the process used as a LOLBIN to execute malicious commands? (2 points)
+### 4. What is the process used as a LOLBIN to execute malicious commands? (2 points)
 
 So we know that the living off the land binary is a process used to execute malicious commands, so this should still have Event ID 1. A couple of logs later we see ftp.exe which is a legit process used to transfer files:
 
@@ -76,7 +76,7 @@ We can see that it's launched from cmd.exe, then launches a process in the locat
 
 ---
 
-#### 5. Malware executed multiple same commands at a time, what is the first command executed? (2 points)
+### 5. Malware executed multiple same commands at a time, what is the first command executed? (2 points)
 
 So for this one, this still applies: we might be able to find it with Event ID 1 if the variable was set by the malware as an argument of a cmd.exe creation. 
 
@@ -107,12 +107,12 @@ We can see the first command of the simultaneous commands is "ipconfig"
 
 ---
 
-#### 6. Looking at the dependency events around the malware, can you figure out the language the malware is written in? (2 points)
+### 6. Looking at the dependency events around the malware, can you figure out the language the malware is written in? (2 points)
 
 ---
 
-#### 7. Malware then downloads a new file, find out the full url of the file download (4 points)
+### 7. Malware then downloads a new file, find out the full url of the file download (4 points)
 
 ---
 
-#### 8. What is the port the attacker attempts to get reverse shell? (4 points)
+### 8. What is the port the attacker attempts to get reverse shell? (4 points)
