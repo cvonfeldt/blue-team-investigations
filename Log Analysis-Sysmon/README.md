@@ -1,12 +1,9 @@
 # Overview: 
 ## We are provided with Sysmon logs from a compromised endpoint, and we need to analyze the logs to answer the prompt questions to ultimately find out the steps and techniques used by the attacker.
 
----
 <br>
 
 ## Investigation:
-
----
 
 #### 1. What is the file that gave access to the attacker? (2 points)
 
