@@ -5,8 +5,6 @@
 
 ![Inv](screenshots/Sys0.png)
 
-<br>
-
 **This is a unique challenge because we are tasked with manually sifting through the sysmon log file without any sort of SIEM or logging aggregate tool, so I will instead use powershell to analyze the logs.**
 
 <br>
