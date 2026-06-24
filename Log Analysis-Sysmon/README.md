@@ -19,13 +19,13 @@ First I tried this powershell command to convert the log file into individual ev
 
 ```powershell
 Get-Content "sysmon-events.json" | ConvertFrom-Json | Where-Object { $_.Event.System.EventID -eq 1 } | Select-Object -ExpandProperty Event | Select-Object -ExpandProperty EventData | Select-Object Image, ParentImage, CommandLine | Format-List
-'''
+```
 
 That gave me errors since the JSON objects weren't wrapped into proper arrays (needs to have a comma after each event and for all of it to be wrapped in brackets), so I ran this to wrap them into a proper array first, then give us the important info we need: 
 
 ```powershell
 Get-Content "sysmon-events.json" -Raw | ForEach-Object { $_ -replace '}\s*{', '},{' } | ForEach-Object { "[$_]" } | ConvertFrom-Json | Where-Object { $_.Event.System.EventID -eq 1 } | ForEach-Object { $_.Event.EventData } | Select-Object Image, ParentImage, CommandLine | Format-List
-'''
+```
 
 So I know the events are in chronological order from the top down so we start at the top, and we don't have to scroll far down the list to see suspicious activity: a powershell instance spawned from mshta.exe with an obviously encoded command used in the commandline. 
 
@@ -75,7 +75,7 @@ That is indeed the case, as scrolling down we see the same commands of "ipconfig
 
 ```powershell
 Get-Content "sysmon-events.json" -Raw | ForEach-Object { $_ -replace '}\s*{', '},{' } | ForEach-Object { "[$_]" } | ConvertFrom-Json | Where-Object { $_.Event.System.EventID -eq 1 -and $_.Event.EventData.ParentImage -eq "C:\windows\temp\supply.exe" } | ForEach-Object { [PSCustomObject]@{ RecordID = $_.Event.System.EventRecordID; CommandLine = $_.Event.EventData.CommandLine } } | Sort-Object RecordID | Format-List
-'''
+```
 
 This should allow us to do what our previous PowerShell command did, but this time return only events with a parent image of C:\windows\temp\supply.exe, as well as take the EventRecordIDs and sort them. However, it didn't output correctly and treated the file all as one object instead of individual objects. 
 
@@ -86,7 +86,7 @@ $raw = Get-Content "sysmon-events.json" -Raw
 $json = "[" + ($raw -replace '}\s*{', '},{') + "]"
 $events = $json | ConvertFrom-Json
 $events | Where-Object { $_.Event.System.EventID -eq 1 -and $_.Event.EventData.ParentImage -eq "C:\windows\temp\supply.exe" } | ForEach-Object { [PSCustomObject]@{ RecordID = $_.Event.System.EventRecordID; CommandLine = $_.Event.EventData.CommandLine } } | Sort-Object RecordID | Format-List
-'''
+```
 
 To store each step in a variable instead of piping it all in one go, and it worked:
 
