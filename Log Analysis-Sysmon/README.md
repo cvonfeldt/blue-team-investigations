@@ -1,6 +1,10 @@
 # Overview: 
 **We are provided with Sysmon logs from a compromised endpoint, and we need to analyze the logs to answer the prompt questions to ultimately find out the steps and techniques used by the attacker.**
 
+<br> 
+
+![Inv](screenshots/Sys0.png)
+
 <br>
 
 **This is a unique challenge because we are tasked with manually sifting through the sysmon log file without any sort of SIEM or logging aggregate tool, so I will instead use powershell to analyze the logs.**
@@ -8,8 +12,6 @@
 <br>
 
 ## Investigation:
-
-![Inv](screenshots/Sys0.png)
 
 ### 1. What is the file that gave access to the attacker?
 
