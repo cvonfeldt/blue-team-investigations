@@ -1,4 +1,4 @@
-# Blueteam Investigation Writeups
+# Blue Team Investigation Writeups
 
 ### A collection of blue team investigations, threat hunting exercises, and incident response case studies focused on real-world SOC workflows. Each investigation documents the analytical process used to identify, investigate, and understand security events through evidence collection, timeline reconstruction, IOC analysis, ATT&CK mapping, and reporting. Topics span endpoint, network, identity, cloud, and threat intelligence investigations using industry-standard security tools and methodologies.
 
@@ -9,11 +9,11 @@
 
 | # | Investigation | Platform | Focus | Status |
 |---|--------------|----------|-------|--------|
-| 01 | [Log Analysis — Sysmon](./01-Log-Analysis-Sysmon/) | BTLO | Endpoint, Windows Event Logs | In Progress |
-| 02 | [Paranoid — Linux IR](./02-Paranoid-Linux-IR/) | BTLO | Linux, SSH, Privilege Escalation | Planned |
+| 01 | [Log Analysis - Sysmon](./01-Log-Analysis-Sysmon/) | BTLO | Endpoint, Windows Event Logs | In Progress |
+| 02 | [Paranoid - Linux IR](./02-Paranoid-Linux-IR/) | BTLO | Linux, SSH, Privilege Escalation | Planned |
 | 03 | [Phishing Analysis](./03-Phishing-Analysis/) | BTLO | Email, IOC Extraction | Planned |
-| 04 | [Follina — CVE-2022-30190](./04-Follina-Investigation/) | BTLO | Endpoint, Vulnerability, Malware | Planned |
-| 05 | [The Report — Threat Intelligence](./05-The-Report-Threat-Intel/) | BTLO | Threat Intel, IOC Analysis | Planned |
+| 04 | [Follina - CVE-2022-30190](./04-Follina-Investigation/) | BTLO | Endpoint, Vulnerability, Malware | Planned |
+| 05 | [The Report - Threat Intelligence](./05-The-Report-Threat-Intel/) | BTLO | Threat Intel, IOC Analysis | Planned |
 
 ---
 
