@@ -35,6 +35,9 @@ We can see right above it that a file downloaded from chrome called "updater.hta
 
 **Answer: updater.hta**
 
+---
+
+
 #### 2. What is the powershell cmdlet used to download the malware file and what is the port? (2 points)
 
 Given that a cmdlet was used, we know this will also have Event ID 1 so we can just keep scrolling down. Looks like we see it here:
@@ -44,6 +47,8 @@ Given that a cmdlet was used, we know this will also have Event ID 1 so we can j
 We see the cmdlet is: "INvoke-WebRequest" - which allows interaction with a web page like file downloads, parsing, API interaction, etc. - and the port is 6969. The malware file downloaded appears to be supply.exe. 
 
 **Answer: INvoke-WebRequest, 6969**
+
+---
 
 #### 3. What is the name of the environment variable set by the attacker? (2 points)
 
@@ -57,6 +62,8 @@ Where we see that the environment variable set is comspec=C:\windows\temp\supply
 
 **Answer: comspec=C:\windows\temp\supply.exe**
 
+---
+
 #### 4. What is the process used as a LOLBIN to execute malicious commands? (2 points)
 
 So we know that the living off the land binary is a process used to execute malicious commands, so this should still have Event ID 1. A couple of logs later we see ftp.exe which is a legit process used to transfer files:
@@ -66,6 +73,8 @@ So we know that the living off the land binary is a process used to execute mali
 We can see that it's launched from cmd.exe, then launches a process in the location of the new comspec location of C:\windows\temp\supply.exe. This chain precisely fits the LOLBIN process we are looking for, so we know it's ftp.exe.
 
 **Answer: ftp.exe**
+
+---
 
 #### 5. Malware executed multiple same commands at a time, what is the first command executed? (2 points)
 
@@ -96,8 +105,14 @@ We can see the first command of the simultaneous commands is "ipconfig"
 
 **Answer: ipconfig**
 
+---
+
 #### 6. Looking at the dependency events around the malware, can you figure out the language the malware is written in? (2 points)
 
+---
+
 #### 7. Malware then downloads a new file, find out the full url of the file download (4 points)
+
+---
 
 #### 8. What is the port the attacker attempts to get reverse shell? (4 points)
