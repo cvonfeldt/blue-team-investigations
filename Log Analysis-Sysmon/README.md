@@ -189,4 +189,7 @@ That juicypotato (privilege escalation tool) gained escalated privileges and lau
 ---
 
 **Completed:**
+
+<br>
+
 ![Done](screenshots/Sys13.png)
