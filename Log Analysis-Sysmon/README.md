@@ -109,10 +109,84 @@ We can see the first command of the simultaneous commands is "ipconfig"
 
 ### 6. Looking at the dependency events around the malware, can you figure out the language the malware is written in? 
 
+Since we know that we are dealing with dependencies here, we know that the Sysmon event would have an EventID of 7, sow e can change our powershell command:
+
+```powershell
+$raw = Get-Content "sysmon-events.json" -Raw
+$json = "[" + ($raw -replace '}\s*{', '},{') + "]"
+$events = $json | ConvertFrom-Json
+$events | Where-Object { $_.Event.System.EventID -eq 7 -and $_.Event.EventData.Image -eq "C:\windows\temp\supply.exe" } | ForEach-Object { $_.Event.EventData } | Select-Object Image, ImageLoaded | Format-List
+```
+
+That outputted nothing - apparently there are no EventID 7 events. Let's try EventID 11 to see what types of files supply.exe creates:
+
+```powershell
+$raw = Get-Content "sysmon-events.json" -Raw
+$json = "[" + ($raw -replace '}\s*{', '},{') + "]"
+$events = $json | ConvertFrom-Json
+$events | Where-Object { $_.Event.System.EventID -eq 11 -and $_.Event.EventData.Image -like "*supply*" } | ForEach-Object { $_.Event.EventData } | Select-Object Image, TargetFilename | Format-List
+```
+
+Running this we get the results:
+
+![Q6](screenshots/Sys8.png)
+
+As we can see there are both C++ (msvcr, msvcp, msvcm) and python target files, but a quick lookup tells us that the consistent _MEI folder associated is a giveaway that PyInstaller is being used and extracting python scripts and dependencies to "MEI..." folders every time - so we know the malware is written in python.
+
+
+**Answer: Python**
+
 ---
 
 ### 7. Malware then downloads a new file, find out the full url of the file download 
 
+Similar to question #2, this requires the script to initiate a connection to download a file, but this time it might not be using the cmdlet used in #2 (INvoke-WebRequest), since we now know that supply.exe is a python script. Instead we should look for Sysmon EventID 3 for network connections: 
+
+```powershell
+$raw = Get-Content "sysmon-events.json" -Raw
+$json = "[" + ($raw -replace '}\s*{', '},{') + "]"
+$events = $json | ConvertFrom-Json
+$events | Where-Object { $_.Event.System.EventID -eq 3 -and $_.Event.EventData.Image -like "*supply*" } | ForEach-Object { $_.Event.EventData } | Select-Object Image, DestinationIp, DestinationPort, DestinationHostname | Format-List
+```
+
+This will show us network connections where the image is supply.exe:
+
+![Q7](screenshots/Sys9.png)
+
+In this we see the results returned the port and IP address that the supply.exe image initiated a connection to, but we will need to cross reference these results with Event ID 11 (file creation) events following after. We will use Record IDs to do so: 
+
+![Q7](screenshots/Sys10.png)
+
+Here we see the first initiated connection has a recordID of 1570 and it spans well into the 2000s, and since we know from #7 that events with EventID 11 only shows targetfilenames of the PyInstaller dependencies, we will try EventID 1 to see if the url was hardcoded into a commandline execution: 
+
+```powershell
+$raw = Get-Content "sysmon-events.json" -Raw
+$json = "[" + ($raw -replace '}\s*{', '},{') + "]"
+$events = $json | ConvertFrom-Json
+$events | Where-Object { $_.Event.System.EventID -eq 1 } | ForEach-Object { [PSCustomObject]@{ RecordID = $_.Event.System.EventRecordID; Image = $_.Event.EventData.Image; CommandLine = $_.Event.EventData.CommandLine } } | Sort-Object RecordID | Format-List
+```
+
+We see it here:
+
+![Q7](screenshots/Sys11.png)
+
+That the url is https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe, and it turns out that the cmdlet INvoke-WebRequest is indeed used again - meaning the supply.exe python script called powershell to download the file instead of using its own libraries. 
+
+**Answer: https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe**
+
 ---
 
 ### 8. What is the port the attacker attempts to get reverse shell? 
+
+For this we see after scrolling down just a few events:
+
+![Q8](screenshots/Sys12.png)
+
+That juicypotato (privilege escalation tool) gained escalated privileges and launches nc.exe to connect to the the attacker's listening IP & port (9999) with a shell attached, and when the exploit succeeds, the attacker establishes the reverse shell on port 9898. 
+
+**Answer: 9898**
+
+---
+
+**Completed:**
+![Done](screenshots/Sys13.png)
