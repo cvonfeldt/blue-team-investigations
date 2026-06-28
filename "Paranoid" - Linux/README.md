@@ -36,6 +36,9 @@ We see from above that the attack is brute force over SSH!
 
 ### 3. What is the attacker's IP address?
 We see in the successful login log that the attacker's IP is 192.168.4.155.
+
+<br>
+
 **Answer: 192.168.4.155**
 
 ---
