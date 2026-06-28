@@ -67,22 +67,32 @@ In the very next event (ID = 481022) we see a successful "sudoedit" with euid = 
 ---
 
 ### 6. What CVE was exploited to gain root access? (Do your research!) 
-The CVE exploited was CVE-2021-3156 (nicknamed "Baron Samedit") - which is a heap buffer overflow in sudoedit that allows for root access. 
+The CVE exploited was CVE-2021-3156 (nicknamed "Baron Samedit") - which is a heap buffer overflow in sudo triggered by sudoedit that allows for root access and affects any local user regardless of sudo privileges. 
 **Answer: CVE-2021-3156**
 
 ---
 
 ### 7. What type of vulnerability is this? 
+*Answered above*
 
-
-**Answer:**
+**Answer: Heap-Based Buffer Overflow**
 
 ---
 
 ### 8. What file was exfiltrated once root was gained? 
+For this one we are going to filter for PATH logs after root access was gained to check where files were catted, opened/read, etc:
+grep 'type=PATH' audit.log | awk -F: '{if ($2 > 481036) print}' | head -20
+![Q8](screenshots/7.png)
 
+We see event 481063 is catting a file, but it doesn't say what that file is, so we will need to check the EXECVE log for that event: 
+grep 'type=EXECVE' audit.log | grep '481063'
+![Q8](screenshots/8.png)
 
-**Answer:**
+We can see here the file catted is "/etc/shadow" which holds all of the hashed passwords only accessible by root - this is the file that was exfiltrated!
+
+**Answer: /etc/shadow**
 
 ---
 
+**Complete:**
+![Q8](screenshots/complete.png)
