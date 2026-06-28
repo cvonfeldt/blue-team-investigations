@@ -42,7 +42,11 @@ We see in the successful login log that the attacker's IP is 192.168.4.155!
 ---
 
 ### 4. What tool was used to perform system enumeration?
-For this I'm going to search for command line execution that inlcudes common enumeration tools (netcat, linpeas, nmap, etc.): grep -i 'linpeas\|nmap\|wget\|curl\|python\|perl\|ruby\|netcat' audit.log:
+For this I'm going to search for command line execution that inlcudes common enumeration tools (netcat, linpeas, nmap, etc.): 
+
+```bash
+grep -i 'linpeas\|nmap\|wget\|curl\|python\|perl\|ruby\|netcat' audit.log:
+```
 
 ![Q4](screenshots/3.png)
 
@@ -55,7 +59,11 @@ We can see in Event 468451 that linpeas is downloaded, and we can see in Event 4
 For this we see that a gzip file called evil.tar.gz was downloaded from the same IP (attacker IP) that linpeas was downloaded from:
 ![Q5](screenshots/4.png)
 
-We will look more into that with the command grep 'type=EXECVE' audit.log | grep 'evil\|tar'
+We will look more into that with the command:
+
+```bash
+grep 'type=EXECVE' audit.log | grep 'evil\|tar'
+```
 ![Q5](screenshots/5.png)
 
 We see a binary called "evil" being compiled with collect2 and ld (C code compiler tools), so let's check related SYSCALL logs after evil was created where euid == 0 (means user ID is root): 
@@ -81,11 +89,19 @@ The CVE exploited was CVE-2021-3156 (nicknamed "Baron Samedit") - which is a hea
 
 ### 8. What file was exfiltrated once root was gained? 
 For this one we are going to filter for PATH logs after root access was gained to check where files were catted, opened/read, etc:
+
+```bash
 grep 'type=PATH' audit.log | awk -F: '{if ($2 > 481036) print}' | head -20
+```
+
 ![Q8](screenshots/7.png)
 
 We see event 481063 is catting a file, but it doesn't say what that file is, so we will need to check the EXECVE log for that event: 
+
+```bash
 grep 'type=EXECVE' audit.log | grep '481063'
+```
+
 ![Q8](screenshots/8.png)
 
 We can see here the file catted is "/etc/shadow" which holds all of the hashed passwords only accessible by root - this is the file that was exfiltrated!
