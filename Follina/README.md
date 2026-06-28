@@ -50,7 +50,7 @@
 ### 7. You were asked to write a process-based detection rule using Windows Event ID 4688. What would be the ProcessName and ParentProcessname used in this detection rule? [Hint: OSINT time!] 
 
 
-**Answer: https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe**
+**Answer:**
 
 ---
 
