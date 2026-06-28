@@ -52,15 +52,23 @@ We can see in Event 468451 that linpeas is downloaded, and we can see in Event 4
 ---
 
 ### 5. What is the name of the binary and pid used to gain root?
+For this we see that a gzip file called evil.tar.gz was downloaded from the same IP (attacker IP) that linpeas was downloaded from:
+![Q5](screenshots/4.png)
 
-**Answer:**
+We will look more into that with the command grep 'type=EXECVE' audit.log | grep 'evil\|tar'
+![Q5](screenshots/5.png)
+
+We see a binary called "evil" being compiled with collect2 and ld (C code compiler tools), so let's check related SYSCALL logs after evil was created where euid == 0 (means user ID is root): 
+![Q5](screenshots/6.png)
+
+In the very next event (ID = 481022) we see a successful "sudoedit" with euid = 0 and pid=829992, meaning evil found a vulnerability within sudoedit that allowed for root privilege escalation. 
+**Answer: evil, 829992**
 
 ---
 
 ### 6. What CVE was exploited to gain root access? (Do your research!) 
-
-
-**Answer:**
+The CVE exploited was CVE-2021-3156 (nicknamed "Baron Samedit") - which is a heap buffer overflow in sudoedit that allows for root access. 
+**Answer: CVE-2021-3156**
 
 ---
 
