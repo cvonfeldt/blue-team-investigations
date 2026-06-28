@@ -19,7 +19,7 @@ For this one we know it's an account being compromised and not a device, so my f
 We can see many successive failed attempts separated by seconds/milliseconds almost certainly indicating a brute force attack over SSH, then we finally see a successful attempt with a timestamp of 1633393393.365:467550 (October 4th 2021):
 ![Q1](screenshots/2.png)
 
-We see here the account compromised is "btlo"
+We see here the account compromised is "btlo".
 
 
 **Answer: btlo**
@@ -35,9 +35,7 @@ We see from above that the attack is brute force over SSH!
 ---
 
 ### 3. What is the attacker's IP address?
-We see in the successful login log that the attacker's IP is 192.168.4.155.
-
-<br>
+We see in the successful login log that the attacker's IP is 192.168.4.155!
 
 **Answer: 192.168.4.155**
 
