@@ -2,7 +2,7 @@
 **We are provided with a phishing email (.eml file) and we need to analyze it to answer the prompt questions to ultimately identify the techniques and indicators used in this phishing campaign.**
 <br>
 
-![Inv](screenshots/0.png)
+![Inv](screenshots/Inv.png)
 
 **This challenge tasks us with analyzing a phishing email pretending to be from Amazon. We will simply use a text editor to examine the raw email headers, body, and embedded URLs.**
 <br>
