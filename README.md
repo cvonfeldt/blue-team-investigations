@@ -11,8 +11,8 @@
 |---|--------------|----------|-------|--------|
 | 01 | [Log Analysis - Sysmon](./01-Log-Analysis-Sysmon/) | BTLO | Endpoint, Windows Event Logs | Complete |
 | 02 | [Paranoid - Linux IR](./02-Paranoid-Linux-IR/) | BTLO | Linux, SSH, Privilege Escalation | Complete |
-| 03 | [Phishing Analysis](./03-Phishing-Analysis/) | BTLO | Email, IOC Extraction | In Progress |
-| 04 | [Follina - CVE-2022-30190](./04-Follina-Investigation/) | BTLO | Endpoint, Vulnerability, Malware | Planned |
+| 03 | [Phishing Analysis](./03-Phishing-Analysis/) | BTLO | Email, IOC Extraction | Complete |
+| 04 | [Follina - CVE-2022-30190](./04-Follina-Investigation/) | BTLO | Endpoint, Vulnerability, Malware | In Progress |
 | 05 | [The Report - Threat Intelligence](./05-The-Report-Threat-Intel/) | BTLO | Threat Intel, IOC Analysis | Planned |
 
 ---
