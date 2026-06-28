@@ -94,5 +94,5 @@ We can see here the file catted is "/etc/shadow" which holds all of the hashed p
 
 ---
 
-**Complete:**
+**Completed:**
 ![Q8](screenshots/complete.png)
