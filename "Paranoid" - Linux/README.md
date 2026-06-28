@@ -13,26 +13,40 @@
 
 ### 1. What account was compromised?
 
-**Answer:**
+For this one we know it's an account being compromised and not a device, so my first thought is to check for attempted logins: 
+![Q1](screenshots/1.png)
+
+We can see many successive failed attempts separated by seconds/milliseconds almost certainly indicating a brute force attack over SSH, then we finally see a successful attempt with a timestamp of 1633393393.365:467550 (October 4th 2021):
+![Q1](screenshots/2.png)
+
+We see here the account compromised is "btlo"
+
+
+**Answer: btlo**
 
 ---
 
 
 ### 2. What attack type was used to gain initial access?
+We see from above that the attack is brute force over SSH!
 
-**Answer:**
+**Answer: Brute Force**
 
 ---
 
 ### 3. What is the attacker's IP address?
-
-**Answer:**
+We see in the successful login log that the attacker's IP is 192.168.4.155.
+**Answer: 192.168.4.155**
 
 ---
 
 ### 4. What tool was used to perform system enumeration?
+For this I'm going to search for command line execution that inlcudes common enumeration tools (netcat, linpeas, nmap, etc.): grep -i 'linpeas\|nmap\|wget\|curl\|python\|perl\|ruby\|netcat' audit.log:
 
-**Answer:**
+![Q4](screenshots/3.png)
+
+We can see in Event 468451 that linpeas is downloaded, and we can see in Event 468664 (and events after) linpeas being run and scanning different directories in the system.
+**Answer: linpeas**
 
 ---
 
