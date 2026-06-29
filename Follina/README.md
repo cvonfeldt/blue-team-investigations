@@ -13,10 +13,11 @@
 ## Investigation:
 
 ### 1. What is the SHA1 hash value of the sample?
-For this I'm just going to have claude ai unzip the file and calculate the sha1 hash value:
+For safety, I'm just going to have claude ai unzip the file and calculate the sha1 hash value:
 ![Q1](screenshots/1.png)
 
-If I were to do it myself, I would simply run sha1sum sample.doc in wsl and get the same value of 
+If I were to do it myself, I would simply run sha1sum sample.doc in wsl and get the same value of 06727ffda60359236a8029e0b3e8a0fd11c23313.
+
 **Answer: 06727ffda60359236a8029e0b3e8a0fd11c23313**
 
 ---
@@ -27,6 +28,7 @@ Now that we have the sha1 hash, we can enter that into virustotal and get more i
 ![Q2](screenshots/2.png)
 
 We see it's an Office Open XML Document. 
+
 **Answer: Office Open XML Document**
 
 ---
@@ -36,6 +38,7 @@ In VirusTotal we can see the network communications which we know would need to 
 ![Q3](screenshots/3.png)
 
 We can see a successful HTTP GET: GET https://www.xmlformats.com:443/office/word/2022/wordprocessingDrawing/RDF842l.html 200, and we can assume that this is where/how the payload is downloaded.
+
 **Answer: https://www.xmlformats.com:443/office/word/2022/wordprocessingDrawing/RDF842l.html**
 
 ---
@@ -45,6 +48,7 @@ Of the bundled xml files:
 ![Q4](screenshots/4.png)
 
 We can see there are only 2 with antivirus engine warnings, and we know that .rels (relations) files contain URLs, so we can assume this is the XML that stores the malicious URL.
+
 **Answer: word/_rels/document.xml.rels**
 
 ---
@@ -57,7 +61,8 @@ For this one I first attempted to use any.run browser, but couldn't get past the
 So I knew I needed to use other OSint. I went to Huntress.com - a trusted and well-known MSP - and saw they had documentation regarding the Follina attack:
 ![Q5](screenshots/6.png)
 
-In their documentation they noted that they found the byte threshold was 4096 - meaning the attack staged on the html at that time needed to be at least 4096 bytes to invoke the payload. 
+In their documentation they noted that they found the byte threshold was 4096 - meaning the attack staged on the html at that time needed to be at least 4096 bytes to invoke the payload.
+
 **Answer: 4096**
 
 ---
@@ -98,6 +103,7 @@ I remember seeing MITRE ATTACK mapping of the attack chain in virustotal, so I'l
 ![Q8](screenshots/13.png)
 
 We know from this MITRE list of execution techniques, that Interprocess Communication (Dynamic Data Exchange) is responsible for the sample execution. As mentioned in the answer to question 7, we see interprocess communication with word (process WINWORD.EXE) and Microsoft Support Diagnostic Tool (msdt.exe), as word pulls the URI then which initiates msdt to open and run the stored powershell script. 
+
 **Answer: T1559**
 
 ---
@@ -107,6 +113,7 @@ This also sounds like a question for VirusTotal:
 ![Q8](screenshots/11.png)
 
 We can see in all of the security vendors' diagnsoses that the associated CVE is 2022-30190.
+
 **Answer: CVE-2022-30190**
 
 ---
