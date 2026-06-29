@@ -102,7 +102,7 @@ After checking, it is indeed correct!
 I remember seeing MITRE ATTACK mapping of the attack chain in virustotal, so I'll go back to that:
 ![Q8](screenshots/13.png)
 
-We know from this MITRE list of execution techniques, that Interprocess Communication (Dynamic Data Exchange) is responsible for the sample execution. As mentioned in the answer to question 7, we see interprocess communication with word (process WINWORD.EXE) and Microsoft Support Diagnostic Tool (msdt.exe), as word pulls the URI then which initiates msdt to open and run the stored powershell script. 
+We know from this MITRE list of execution techniques, that Interprocess Communication (Dynamic Data Exchange) is responsible for the sample execution. As mentioned in the answer to question 7, we see interprocess communication with word (process WINWORD.EXE) and Microsoft Support Diagnostic Tool (msdt.exe), as word pulls the URI then which initiates msdt to open and run the stored powershell script (Note: this could also fall under "T1064: Scripting" for the ps script).
 
 **Answer: T1559**
 
