@@ -51,7 +51,7 @@ We can see there are only 2 with antivirus engine warnings, and we know that .re
 
 ### 5. The extracted URL accesses a HTML file that triggers the vulnerability to execute a malicious payload. According to the HTML processing functions, any files with fewer than <Number> bytes would not invoke the payload. Submit the <Number>
 
-For this one I first attempted to use any.run, but couldn't get past the CAPTCHA:
+For this one I first attempted to use any.run browser, but couldn't get past the CAPTCHA:
 ![Q5](screenshots/5.png)
 
 So I knew I needed to use other OSint. I went to Huntress.com - a trusted and well-known MSP - and saw they had documentation regarding the Follina attack:
@@ -63,24 +63,53 @@ In their documentation they noted that they found the byte threshold was 4096 - 
 ---
 
 ### 6. After execution, the sample will try to kill a process if it is already running. What is the name of this process? 
+I tried again to use any.run (but instead just file analysis) for this one to view the process tree, but it didn't include anything about a process being killed:
+![Q6](screenshots/7.png)
+![Q6](screenshots/test1.png)
 
+I tried going to the URL directly and it was down (so i'm not really sure why it had me doing CAPTCHA in question 5 - most likely I was redirected):
+![Q6](screenshots/10.png)
 
-**Answer:**
+So I went to virustotal again and saw there was a section that listed terminated processes:
+![Q6](screenshots/8.png)
+
+We can see here that WINWORD.exe is temrinated, which makes sense as the attack would likely want to cover its tracks and close word so the user doesn't inspect further (hope they think it just crashed). I thought I could assume that WINWORD.EXE was the process the question is referring to here, but that wasn't the right one apparently. 
+
+Knowing I had to do some more OSint research, I was able to find a direct link to someone's any.run runthrough where the malware ran to completion (mine wouldn't work because the html URL is down now):
+![Q6](screenshots/9.png)
+
+Here we see in the process tree a taskkill of msdt.exe, which makes sense due to the same reasons why WINWORD.EXE is killed - cleanup and removal of evidence of how payload was executed.
+
+**Answer: msdt.exe**
 
 ---
 
 ### 7. You were asked to write a process-based detection rule using Windows Event ID 4688. What would be the ProcessName and ParentProcessname used in this detection rule? [Hint: OSINT time!] 
+For this I would think that any time Word spawns msdt.exe process, that would be a red flag since that shouldn't occur in a healthy environment. It should only occur as a troubleshooting/diagnostic tool and would be spawned from a windows parent process (svchost.exe, explorer.exe, control.exe) not word. If this is wrong I will use OSint, but I think this is right. 
 
+After checking, it is indeed correct!
 
-**Answer:**
+**Answer: ProcessName: msdt.exe, ParentProcessName: WINWORD.exe**
 
 ---
 
-### 8.  Submit the CVE associated with the vulnerability that is being exploited
+### 8. Submit the MITRE technique ID used by the sample for Execution
+I remember seeing MITRE ATTACK mapping of the attack chain in virustotal, so I'll go back to that:
+![Q8](screenshots/13.png)
 
+We know from this MITRE list of execution techniques, that Interprocess Communication (Dynamic Data Exchange) is responsible for the sample execution. As mentioned in the answer to question 7, we see interprocess communication with word (process WINWORD.EXE) and Microsoft Support Diagnostic Tool (msdt.exe), as word pulls the URI then which initiates msdt to open and run the stored powershell script. 
+**Answer: T1559**
 
-**Answer:**
+---
+
+### 9.  Submit the CVE associated with the vulnerability that is being exploited
+This also sounds like a question for VirusTotal:
+![Q8](screenshots/11.png)
+
+We can see in all of the security vendors' diagnsoses that the associated CVE is 2022-30190.
+**Answer: CVE-2022-30190**
 
 ---
 
 **Completed:**
+![done](screenshots/12.png)
