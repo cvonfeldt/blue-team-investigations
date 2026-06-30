@@ -1,7 +1,7 @@
 # Overview: 
 ## We are provided with Red Canary's 2022 threat report and tasked with analyzing it to answer questions that help build actionable intel for a newly established SOC.
 
-![Inv](screenshots/Inv)
+![Inv](screenshots/Inv.png)
 
 <br>
 
@@ -47,7 +47,6 @@ and going to that we see there is 1 vuln called ProxyLogon that belonged to exha
 
 The next is ProxyShell, which very similarly allowed attackers to execute remote code without auth leading to system and network compromise
 
-
 **Answer: ProxyLogon, ProxyShell**
 
 ---
@@ -68,6 +67,7 @@ For this one I just used ctrl F to find the SEO mentioned, and we see:
 ![Q5](screenshots/6.png)
 
 That Gootkit and Yellow cockatoo were the 2 adversary groups that leveraged SEO (with high-intent keywords) to gain initial access.
+
 **Answer: Gootkit, Yellow Cockatoo**
 
 ---
@@ -88,6 +88,7 @@ Using Ctrl F to find Conti:
 ![Q7](screenshots/8.png)
 
 We see that the 3 precursors to the Conti ransomware group are QBot, Bazar, and IcedID.
+
 **Answer: QBot, Bazar, IcedID**
 
 ---
@@ -110,6 +111,7 @@ We see in the TOC that ransomware starts on page 11:
 ![Q9](screenshots/10.png)
 
 We see the group that threatened to conduct DDoS if they didn't pay ransom was Fancy Lazarus.
+
 **Answer: Fancy Lazarus**
 
 ---
@@ -119,7 +121,8 @@ Scrolling down in ransomware a bit:
 
 ![Q10](screenshots/11.png)
 
-The answer is MFA or multifactor auth so that we can confirm the people who are logging on to RDP are actually who they say they are 
+The answer is MFA or multifactor auth so that we can confirm the people who are logging on to RDP are actually who they say they are.
+
 **Answer: MFA**
 
 ---
