@@ -5,7 +5,7 @@
 
 <br>
 
-## This challenge is unique because rather than hands-on log analysis or forensics, it requires careful reading and interpretation of a real-world threat report - extracting specific techniques, CVEs, adversary groups, and detection insights to inform SOC operations.
+## This challenge is unique because rather than hands-on log analysis or forensics, it requires reading and learning a real-world threat report from a major MSP/MDR including specific techniques, CVEs, adversary groups, and detection insights that are directly tied to SOC operations.
 
 <br>
 
