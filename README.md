@@ -17,7 +17,7 @@
 | 02 | [Paranoid - Linux IR](./02-Paranoid-Linux-IR/) | BTLO | Linux, SSH, Privilege Escalation | Complete |
 | 03 | [Phishing Analysis](./03-Phishing-Analysis/) | BTLO | Email, IOC Extraction | Complete |
 | 04 | [Follina - CVE-2022-30190](./04-Follina-Investigation/) | BTLO | Endpoint, Vulnerability, Malware | Complete |
-| 05 | [The Report - Threat Intelligence](./05-The-Report-Threat-Intel/) | BTLO | Threat Intel, IOC Analysis | In Progress |
+| 05 | [The Report - Threat Intelligence](./05-The-Report-Threat-Intel/) | BTLO | Threat Intel, IOC Analysis | Complete |
 
 ---
 
@@ -28,7 +28,7 @@ Each investigation follows a consistent format:
 ```
 Overview        — scenario background and scope
 Methodology     — step-by-step analytical approach
-Findings        — evidence, artifacts, and answers
+Investigation   — evidence, artifacts, and answers
 IOCs            — IPs, hashes, domains, file names
 ATT&CK Mapping  — tactic and technique identification
 Timeline        — chronological event reconstruction
