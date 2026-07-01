@@ -6,6 +6,7 @@
 
 ![warning](screenshots/warning.png)
 
+### Methodology: 
 **This challenge contains real malware so I won't unzip the file on my host machine - instead I'll use this opportunity to showcase the strength and ability of OSint - VirusTotal, Any.Run, etc. - as an alternative in analyzing malware.**
 
 <br>
