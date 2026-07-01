@@ -63,6 +63,7 @@
 
 | ATT&CK ID | Technique                                                | Evidence                                        |
 | --------- | -------------------------------------------------------- | ----------------------------------------------- |
+| T1218.005 | System Binary Proxy Execution: Mshta                     | 'mshta.exe' launched after execution of 'updater.hta' |
 | T1059.001 | Command and Scripting Interpreter: PowerShell            | Encoded PowerShell execution, Invoke-WebRequest |
 | T1027     | Obfuscated Files or Information                          | Base64-encoded PowerShell command               |
 | T1059.003 | Command and Scripting Interpreter: Windows Command Shell | PowerShell spawning `cmd.exe`                   |
@@ -70,7 +71,7 @@
 | T1574     | Hijack Execution Flow                                    | COMSPEC modified to point to `supply.exe`       |
 | T1218     | System Binary Proxy Execution                            | `ftp.exe` abused to proxy malware execution     |
 | T1059.006 | Command and Scripting Interpreter: Python                | Python script - supply.exe                      |
-| T1082     | System Information Discovery                             | `ipconfig`                                      |
+| T1016     | System Network Configuration Discovery                   | `ipconfig`                                      |
 | T1033     | System Owner/User Discovery                              | `whoami`                                        |
 | T1068     | Exploitation for Privilege Escalation                    | `JuicyPotato.exe` execution                     |
 | T1095     | Non-Application Layer Protocol                           | Netcat reverse shell / interactive C2           |
