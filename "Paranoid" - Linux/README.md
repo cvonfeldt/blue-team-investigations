@@ -5,6 +5,7 @@
 
 ![Inv](screenshots/0.png)
 
+### Overview: 
 **This is another challenge where we are tasked with manually sifting through the log file without any sort of SIEM or logging aggregate tool, so this time we will use bash to analyze the logs.**
 
 <br>
