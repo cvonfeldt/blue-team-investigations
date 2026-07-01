@@ -10,6 +10,35 @@
 
 <br>
 
+### Attack Chain: 
+                                                                                  User runs updater.hta
+                                                                                          ↓
+                                                                                      mshta.exe
+                                                                                          ↓
+                                                                                  Encoded PowerShell
+                                                                                          ↓
+                                                                                  Invoke-WebRequest
+                                                                                          ↓
+                                                                                Downloads supply.exe
+                                                                                          ↓
+                                                                                Sets COMSPEC variable
+                                                                                          ↓
+                                                                                Abuses ftp.exe (LOLBIN)
+                                                                                          ↓
+                                                                            Runs reconnaissance (ipconfig, whoami)
+                                                                                          ↓
+                                                                                Downloads JuicyPotato.exe
+                                                                                          ↓
+                                                                                Privilege Escalation
+                                                                                          ↓
+                                                                                  SYSTEM privileges
+                                                                                          ↓
+                                                                                   Launches nc.exe
+                                                                                          ↓
+                                                                                Reverse shell to attacker
+                                                                                          ↓
+                                                                          Attacker gains full interactive access
+
 ## Investigation:
 
 ### 1. What is the file that gave access to the attacker?
