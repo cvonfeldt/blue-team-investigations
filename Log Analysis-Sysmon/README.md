@@ -11,35 +11,35 @@
 <br>
 
 ### Attack Chain: 
-                                                          User runs updater.hta
-                                                                  ↓
-                                                              mshta.exe
-                                                                  ↓
-                                                          Encoded PowerShell
-                                                                  ↓
-                                      Encoded PS spawns cmd which second PS that runs Invoke-WebRequest
-                                                                  ↓
-                                                    Encoded PS downloads supply.exe
-                                                                  ↓
-                                          Encoded PS sets COMSPEC variable to point to supply.exe
-                                                                  ↓
-                                                    Encoded PS abuses ftp.exe (LOLBIN)
-                                                                  ↓
-                                          ftp.exe runs supply.exe - supply.exe script takes over 
-                                                                  ↓
-                                                Runs reconnaissance (ipconfig, whoami)
-                                                                  ↓
-                                                        Downloads JuicyPotato.exe
-                                                                  ↓
-                                                        Privilege Escalation
-                                                                  ↓
-                                                          SYSTEM privileges
-                                                                  ↓
-                                                           Launches nc.exe
-                                                                  ↓
-                                                        Reverse shell to attacker
-                                                                  ↓
-                                                  Attacker gains full interactive access
+                                                      User runs updater.hta
+                                                              ↓
+                                                          mshta.exe
+                                                              ↓
+                                                      Encoded PowerShell
+                                                              ↓
+                                  Encoded PS spawns cmd which second PS that runs Invoke-WebRequest
+                                                              ↓
+                                                Encoded PS downloads supply.exe
+                                                              ↓
+                                      Encoded PS sets COMSPEC variable to point to supply.exe
+                                                              ↓
+                                                Encoded PS abuses ftp.exe (LOLBIN)
+                                                              ↓
+                                      ftp.exe runs supply.exe - supply.exe script takes over 
+                                                              ↓
+                                            Runs reconnaissance (ipconfig, whoami)
+                                                              ↓
+                                                    Downloads JuicyPotato.exe
+                                                              ↓
+                                                    Privilege Escalation
+                                                              ↓
+                                                      SYSTEM privileges
+                                                              ↓
+                                                       Launches nc.exe
+                                                              ↓
+                                                    Reverse shell to attacker
+                                                              ↓
+                                              Attacker gains full interactive access
 
 ---
 
@@ -56,6 +56,24 @@
 | Parent-child anomaly      | mshta.exe to powershell.exe / ftp.exe to supply.exe |
 | Network IOC               | TCP/6969 (payload download) / TCP/9898 (reverse shell)   |
 | Environmental Variable Change | comspec=C:\windows\temp\supply.exe   |
+
+---
+
+## MITRE ATT&CK Mapping:
+
+| ATT&CK ID | Technique                                                | Evidence                                        |
+| --------- | -------------------------------------------------------- | ----------------------------------------------- |
+| T1059.001 | Command and Scripting Interpreter: PowerShell            | Encoded PowerShell execution, Invoke-WebRequest |
+| T1027     | Obfuscated Files or Information                          | Base64-encoded PowerShell command               |
+| T1059.003 | Command and Scripting Interpreter: Windows Command Shell | PowerShell spawning `cmd.exe`                   |
+| T1105     | Ingress Tool Transfer                                    | Download of `supply.exe` and `JuicyPotato.exe`  |
+| T1574     | Hijack Execution Flow                                    | COMSPEC modified to point to `supply.exe`       |
+| T1218     | System Binary Proxy Execution                            | `ftp.exe` abused to proxy malware execution     |
+| T1059.006 | Command and Scripting Interpreter: Python                | Python script - supply.exe                      |
+| T1082     | System Information Discovery                             | `ipconfig`                                      |
+| T1033     | System Owner/User Discovery                              | `whoami`                                        |
+| T1068     | Exploitation for Privilege Escalation                    | `JuicyPotato.exe` execution                     |
+| T1095     | Non-Application Layer Protocol                           | Netcat reverse shell / interactive C2           |
 
 ---
 
