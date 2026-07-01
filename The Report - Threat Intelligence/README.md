@@ -1,11 +1,12 @@
 # Overview: 
-## We are provided with Red Canary's 2022 threat report and tasked with analyzing it to answer questions that help build actionable intel for a newly established SOC.
+**We are provided with Red Canary's 2022 threat report and tasked with analyzing it to answer questions that help build actionable intel for a newly established SOC.**
 
 ![Inv](screenshots/Inv.png)
 
 <br>
 
-## This challenge is unique because rather than hands-on log analysis or forensics, it requires reading and learning a real-world threat report from a major MSP/MDR including specific techniques, CVEs, adversary groups, and detection insights that are directly tied to SOC operations.
+### Methodology: 
+**This challenge is unique because rather than hands-on log analysis or forensics, it requires reading and learning a real-world threat report from a major MSP/MDR including specific techniques, CVEs, adversary groups, and detection insights that are directly tied to SOC operations.**
 
 <br>
 
