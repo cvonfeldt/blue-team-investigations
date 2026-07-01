@@ -25,7 +25,7 @@
                                                                   ↓
                                                         Abuses ftp.exe (LOLBIN)
                                                                   ↓
-                                                  Runs reconnaissance (ipconfig, whoami)
+                                                Runs reconnaissance (ipconfig, whoami)
                                                                   ↓
                                                         Downloads JuicyPotato.exe
                                                                   ↓
