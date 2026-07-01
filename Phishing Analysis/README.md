@@ -5,6 +5,7 @@
 
 ![Inv](screenshots/Inv.png)
 
+### Methodology: 
 **This challenge tasks us with analyzing a phishing email pretending to be from Amazon. We will simply use a text editor to examine the raw email headers, body, and embedded URLs.**
 
 <br>
