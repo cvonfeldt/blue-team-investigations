@@ -53,8 +53,9 @@
 | Reverse Shell Tool        | nc.exe             |
 | PyInstaller Artifacts     | _MEI* directories  |
 | Command line pattern      | powershell.exe -enc / Invoke-WebRequest  |
-| Parent-child anomaly      | mshta.exe to powershell.exe  |
+| Parent-child anomaly      | mshta.exe to powershell.exe / ftp.exe to supply.exe |
 | Network IOC               | TCP/6969 (payload download) / TCP/9898 (reverse shell)   |
+| Environmental Variable Change | comspec=C:\windows\temp\supply.exe   |
 
 ---
 
@@ -82,6 +83,8 @@ So I know the events are in chronological order from the top down so we start at
 
 We can see right above it that a file downloaded from chrome called "updater.hta" was run by mshta.exe in the commandline - we can see given what followed that this is the file that initially compromised the machine. 
 
+We can see encoded commands. Decoding the first in a base64 decoding tool, we get the second command below, which is another encoded command that is gzip-compressed. The attacker has used multiple levels of obsfucation here.
+
 **Answer: updater.hta**
 
 ---
@@ -107,7 +110,7 @@ Scrolling down we find this exactly:
 
 ![Q3](screenshots/Sys5.png)
 
-Where we see that the environment variable set is comspec=C:\windows\temp\supply.exe, which makes that folder the default location of command-line execution. We also see that the parent process actually isn't supply.exe, so we can assume that it's likely from the encoded Gzip compression powershell payload that spawned from updater.hta. We will keep that in mind going forward.
+Where we see that the environment variable set is comspec=C:\windows\temp\supply.exe, which makes that folder the default location of command-line execution. We also see that the parent process actually isn't supply.exe, so we can assume that it's likely from the encoded Gzip compression powershell payload that spawned from updater.hta, and that this is in preparation to run supply.exe.
 
 **Answer: comspec=C:\windows\temp\supply.exe**
 
@@ -115,11 +118,11 @@ Where we see that the environment variable set is comspec=C:\windows\temp\supply
 
 ### 4. What is the process used as a LOLBIN to execute malicious commands? 
 
-So we know that the living off the land binary is a process used to execute malicious commands, so this should still have Event ID 1. A couple of logs later we see ftp.exe which is a legit process used to transfer files:
+So we know that the living off the land binary is uses trusted processes to carry out malicious behavior, the trusted process has to be created so this should still have Event ID 1. A couple of logs later we see ftp.exe which is a legit process used to transfer files:
 
 ![Q4](screenshots/Sys6.png)
 
-We can see that it's launched from cmd.exe, then launches a process in the location of the new comspec location of C:\windows\temp\supply.exe. This chain precisely fits the LOLBIN process we are looking for, so we know it's ftp.exe.
+We can see that it's launched from cmd.exe, then launches a process in the location of the new comspec location of C:\windows\temp\supply.exe. This chain precisely fits the LOLBIN process we are looking for, so we know it's ftp.exe, and that the encoded script is spawning it to launch the newly-pointed-to supply.exe that is in place of cmd.exe.
 
 **Answer: ftp.exe**
 
@@ -127,7 +130,7 @@ We can see that it's launched from cmd.exe, then launches a process in the locat
 
 ### 5. Malware executed multiple same commands at a time, what is the first command executed?
 
-So for this one, this still applies: we might be able to find it with Event ID 1 if the variable was set by the malware as an argument of a cmd.exe creation. 
+We know that supply.exe script was likely triggered and that it's now spawning commands, so this still applies: we might be able to find it with Event ID 1 if the variable was set by the malware as an argument of a cmd.exe creation. 
 
 That is indeed the case, as scrolling down we see the same commands of "ipconfig," and "whoami." However knowing that they're simultaneous, that means they'll ahve the same timestamp, so the chronological order of our Sysmon events from top-down won't necessarily apply here. Instead we will need to refine our powershell command to output EventRecordID as well to show which commands really came first:
 
