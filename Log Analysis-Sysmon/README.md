@@ -41,7 +41,7 @@ We can see right above it that a file downloaded from chrome called "updater.hta
 
 ### 2. What is the powershell cmdlet used to download the malware file and what is the port? 
 
-Given that a cmdlet was used, we know this will also have Event ID 1 so we can just keep scrolling down. Looks like we see it here:
+Given that a cmdlet was used and the malware file will most likely be an executable, we will check if this will also have Event ID 1 - so we can just keep scrolling down. Looks like we see it here:
 
 ![Q2](screenshots/Sys4.png)
 
