@@ -28,11 +28,10 @@ Each investigation follows a consistent format:
 ```
 Overview        — scenario background and scope
 Methodology     — step-by-step analytical approach
-Investigation   — evidence, artifacts, and answers
+Timeline        — chronological event reconstruction
 IOCs            — IPs, hashes, domains, file names
 ATT&CK Mapping  — tactic and technique identification
-Timeline        — chronological event reconstruction
-Recommendations — detection and defensive actions
+Investigation   — evidence, artifacts, and answers
 ```
 
 ---
