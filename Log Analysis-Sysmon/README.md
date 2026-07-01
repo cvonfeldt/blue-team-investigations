@@ -17,13 +17,15 @@
                                                                   ↓
                                                           Encoded PowerShell
                                                                   ↓
-                                                          Invoke-WebRequest
+                                      Encoded PS spawns cmd which second PS that runs Invoke-WebRequest
                                                                   ↓
-                                                        Downloads supply.exe
+                                                    Encoded PS downloads supply.exe
                                                                   ↓
-                                                        Sets COMSPEC variable
+                                          Encoded PS sets COMSPEC variable to point to supply.exe
                                                                   ↓
-                                                        Abuses ftp.exe (LOLBIN)
+                                                    Encoded PS abuses ftp.exe (LOLBIN)
+                                                                  ↓
+                                          ftp.exe runs supply.exe - supply.exe script takes over 
                                                                   ↓
                                                 Runs reconnaissance (ipconfig, whoami)
                                                                   ↓
