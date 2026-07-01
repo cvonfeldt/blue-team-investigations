@@ -45,12 +45,12 @@
 
 | IOC Type                  | Value               |
 | -------------------------- | -------------------- |
-| Initial Access File       | `updater.hta`        |
-| Malware                   | `supply.exe`         |
-| Privilege Escalation Tool | `JuicyPotato.exe`    |
-| Reverse Shell Tool        | `nc.exe`             |
-| PyInstaller Artifacts     | `_MEI*` directories  |
-| Command line pattern      | 'powershell.exe -enc / Invoke-WebRequest  |
+| Initial Access File       | updater.hta        |
+| Malware                   | supply.exe         |
+| Privilege Escalation Tool | JuicyPotato.exe    |
+| Reverse Shell Tool        | nc.exe             |
+| PyInstaller Artifacts     | _MEI* directories  |
+| Command line pattern      | powershell.exe -enc / Invoke-WebRequest  |
 | Parent-child anomaly      | mshta.exe to powershell.exe  |
 | Network IOC               | TCP/6969 (payload download) / TCP/9898 (reverse shell)   |
 
